@@ -63,3 +63,20 @@
 		qcom,sd-lines = <0>;
 	};
 };
+
+&tlmm {
+	sec_mi2s_sd1_sleep: sec-mi2s-sd1-sleep-state {
+		pins = "gpio83";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-down;
+		input-enable;
+	};
+
+	sec_mi2s_sd1_active: sec-mi2s-sd1-active-state {
+		pins = "gpio83";
+		function = "sec_mi2s";
+		drive-strength = <8>;
+		bias-disable;
+	};
+};

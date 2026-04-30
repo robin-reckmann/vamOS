@@ -134,31 +134,16 @@
 		drive-strength = <8>;
 		bias-disable;
 	};
-
-	tert_mi2s_sd1_sleep: tert-mi2s-sd1-sleep-state {
-		pins = "gpio78";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-pull-down;
-		input-enable;
-	};
-
-	tert_mi2s_sd1_active: tert-mi2s-sd1-active-state {
-		pins = "gpio78";
-		function = "ter_mi2s";
-		drive-strength = <8>;
-		bias-disable;
-	};
 };
 
 &sound {
 	model = "comma tizi";
 
 	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&sec_mi2s_mclk_active &sec_mi2s_active &sec_mi2s_sd0_active &sec_mi2s_sd1_active
-	             &tert_mi2s_active &tert_mi2s_sd0_active &tert_mi2s_sd1_active>;
-	pinctrl-1 = <&sec_mi2s_mclk_sleep &sec_mi2s_sleep &sec_mi2s_sd0_sleep &sec_mi2s_sd1_sleep
-	             &tert_mi2s_sleep &tert_mi2s_sd0_sleep &tert_mi2s_sd1_sleep>;
+	pinctrl-0 = <&sec_mi2s_mclk_active &sec_mi2s_active &sec_mi2s_sd0_active
+	             &tert_mi2s_active &tert_mi2s_sd0_active>;
+	pinctrl-1 = <&sec_mi2s_mclk_sleep &sec_mi2s_sleep &sec_mi2s_sd0_sleep
+	             &tert_mi2s_sleep &tert_mi2s_sd0_sleep>;
 
 	capture-dai-link {
 		link-name = "Capture";
