@@ -51,3 +51,15 @@
 	remote-endpoint = <&panel_in>;
 	data-lanes = <0>;
 };
+
+&q6afedai {
+	qi2s@18 {
+		reg = <SECONDARY_MI2S_RX>;
+		qcom,sd-lines = <1>;
+	};
+
+	qi2s@19 {
+		reg = <SECONDARY_MI2S_TX>;
+		qcom,sd-lines = <0>;
+	};
+};

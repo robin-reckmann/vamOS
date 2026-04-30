@@ -76,6 +76,18 @@
 	data-lanes = <0 1 2 3>;
 };
 
+&q6afedai {
+	qi2s@18 {
+		reg = <SECONDARY_MI2S_RX>;
+		qcom,sd-lines = <0>;
+	};
+
+	qi2s@21 {
+		reg = <TERTIARY_MI2S_TX>;
+		qcom,sd-lines = <0>;
+	};
+};
+
 &tlmm {
 	tert_mi2s_mclk_sleep: tert-mi2s-mclk-sleep-state {
 		pins = "gpio74";
@@ -136,18 +148,6 @@
 		function = "ter_mi2s";
 		drive-strength = <8>;
 		bias-disable;
-	};
-};
-
-&q6afedai {
-	qi2s@18 {
-		reg = <SECONDARY_MI2S_RX>;
-		qcom,sd-lines = <0>;
-	};
-
-	qi2s@21 {
-		reg = <TERTIARY_MI2S_TX>;
-		qcom,sd-lines = <0>;
 	};
 };
 
