@@ -435,11 +435,6 @@
 	status = "okay";
 
 	compatible = "qcom,sdm845-sndcard";
-	model = "comma four";
-
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&sec_mi2s_mclk_active &sec_mi2s_active &sec_mi2s_sd0_active>;
-	pinctrl-1 = <&sec_mi2s_mclk_sleep &sec_mi2s_sleep &sec_mi2s_sd0_sleep>;
 
 	mm1-dai-link {
 		link-name = "MultiMedia1";
@@ -457,9 +452,6 @@
 
 	capture-dai-link {
 		link-name = "Capture";
-		cpu {
-			sound-dai = <&q6afedai SECONDARY_MI2S_TX>;
-		};
 
 		platform {
 			sound-dai = <&q6routing>;

@@ -64,6 +64,20 @@
 	};
 };
 
+&sound {
+	model = "comma mici";
+
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sec_mi2s_active &sec_mi2s_sd0_active &sec_mi2s_sd1_active>;
+	pinctrl-1 = <&sec_mi2s_sleep &sec_mi2s_sd0_sleep &sec_mi2s_sd1_sleep>;
+
+	capture-dai-link {
+		cpu {
+			sound-dai = <&q6afedai SECONDARY_MI2S_TX>;
+		};
+	};
+};
+
 &tlmm {
 	sec_mi2s_sd1_sleep: sec-mi2s-sd1-sleep-state {
 		pins = "gpio83";

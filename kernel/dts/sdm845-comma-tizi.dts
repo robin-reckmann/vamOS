@@ -146,7 +146,6 @@
 	             &tert_mi2s_sleep &tert_mi2s_sd0_sleep>;
 
 	capture-dai-link {
-		link-name = "Capture";
 		cpu {
 			sound-dai = <&q6afedai TERTIARY_MI2S_TX>;
 		};
