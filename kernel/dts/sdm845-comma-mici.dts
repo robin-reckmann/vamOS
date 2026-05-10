@@ -7,6 +7,10 @@
 	compatible = "comma,mici", "qcom,sdm845";
 	qcom,msm-id = <341 0x20001>, <321 0x20001>, <321 0x20000>, <348 0x20001>;
 	qcom,board-id = <0x22 0>;
+
+	aliases {
+		hsuart0 = &uart3;
+	};
 };
 
 &i2c5 {
@@ -93,4 +97,7 @@
 		drive-strength = <8>;
 		bias-disable;
 	};
+};
+&uart3 {
+	status = "okay";
 };
