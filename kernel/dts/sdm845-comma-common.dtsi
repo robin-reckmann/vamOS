@@ -1,6 +1,9 @@
 /dts-v1/;
 
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+#include <dt-bindings/clock/qcom,rpmh.h>
+#include <dt-bindings/sound/qcom,q6afe.h>
+#include <dt-bindings/sound/qcom,q6asm.h>
 #include "sdm845.dtsi"
 #include "pm8998.dtsi"
 #include "pmi8998.dtsi"
@@ -12,6 +15,13 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
+	};
+
+	generic_codec: audio-codec {
+		compatible = "commaai,generic-codec";
+		#sound-dai-cells = <0>;
+		clock-names = "mclk";
+		clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
 	};
 
 	lcd3v3: lcd3v3 {
@@ -344,6 +354,11 @@
 	};
 };
 
+&adsp_pas {
+	status = "okay";
+	firmware-name = "qcom/sdm845/adsp.mbn";
+};
+
 &gcc {
 	protected-clocks = <GCC_QSPI_CORE_CLK>,
 			   <GCC_QSPI_CORE_CLK_SRC>,
@@ -406,6 +421,63 @@
 	status = "okay";
 };
 
+&q6asmdai {
+	dai@0 {
+		reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
+	};
+
+	dai@1 {
+		reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
+	};
+};
+
+&sound {
+	status = "okay";
+
+	compatible = "qcom,sdm845-sndcard";
+
+	mm1-dai-link {
+		link-name = "MultiMedia1";
+		cpu {
+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
+		};
+	};
+
+	mm2-dai-link {
+		link-name = "MultiMedia2";
+		cpu {
+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
+		};
+	};
+
+	capture-dai-link {
+		link-name = "Capture";
+
+		platform {
+			sound-dai = <&q6routing>;
+		};
+
+		codec {
+			sound-dai = <&generic_codec>;
+		};
+	};
+
+	playback-dai-link {
+		link-name = "Playback";
+		cpu {
+			sound-dai = <&q6afedai SECONDARY_MI2S_RX>;
+		};
+
+		platform {
+			sound-dai = <&q6routing>;
+		};
+
+		codec {
+			sound-dai = <&generic_codec>;
+		};
+	};
+};
+
 &spi0 {
 	status = "okay";
 
@@ -413,6 +485,53 @@
 		compatible = "commaai,panda";
 		spi-max-frequency = <50000000>;
 		reg = <0>;
+	};
+};
+
+&tlmm {
+	sec_mi2s_mclk_sleep: sec-mi2s-mclk-sleep-state {
+		pins = "gpio79";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-down;
+		input-enable;
+	};
+
+	sec_mi2s_mclk_active: sec-mi2s-mclk-active-state {
+		pins = "gpio79";
+		function = "sec_mi2s";
+		drive-strength = <8>;
+		bias-disable;
+	};
+
+	sec_mi2s_sleep: sec-mi2s-sleep-state {
+		pins = "gpio80", "gpio81";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+		input-enable;
+	};
+
+	sec_mi2s_active: sec-mi2s-active-state {
+		pins = "gpio80", "gpio81";
+		function = "sec_mi2s";
+		drive-strength = <8>;
+		bias-disable;
+	};
+
+	sec_mi2s_sd0_sleep: sec-mi2s-sd0-sleep-state {
+		pins = "gpio82";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-down;
+		input-enable;
+	};
+
+	sec_mi2s_sd0_active: sec-mi2s-sd0-active-state {
+		pins = "gpio82";
+		function = "sec_mi2s";
+		drive-strength = <8>;
+		bias-disable;
 	};
 };
 
