@@ -1,0 +1,17 @@
+#!/bin/sh
+# panda - internal STM32 (built-in panda) reset, like openpilot's pandad
+exec 2>&1
+
+# Wait for gpio setup to finish exporting all pins
+while [ ! -f /run/gpio.ready ]; do sleep 0.1; done
+
+# Run the panda script (exits nonzero until the panda enumerates on USB)
+if /usr/comma/panda/panda.sh start; then
+  echo "panda: started"
+else
+  echo "panda: failed to start"
+  exit 1
+fi
+
+# Stay up so runit doesn't restart
+exec sleep infinity
